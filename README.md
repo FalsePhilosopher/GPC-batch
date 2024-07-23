@@ -15,7 +15,7 @@ for i in *.iso; do chdman createdvd -i "$i" -o "${i%.*}.chd"; done
 ```
 ### GameCube conversion for use with dolphin
 ```
-for i in *.iso; do dolphin-tool convert -i "$i" -o "${i%.*}"; done
+for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "${i%.*}.rsv"; done
 ```
 ### GameCube iso trimming for use with nintendont  
 Add `trim.bat` to the folder, using wine gcit.exe can't rm the .tmp files. So the hacky workaround is included in the one liner. This is very storage intensive as there is two copies untill the .tmp files are removed.
