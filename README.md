@@ -1,6 +1,6 @@
 # chdman-batch
 
-For a one line conversion
+For a one line conversion of PSX
 ```
 for i in *.cue; do chdman createcd -i "$i" -o "${i%.*}.chd"; done
 ```
