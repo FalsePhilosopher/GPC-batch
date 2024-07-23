@@ -1,6 +1,10 @@
 # Game Preservation Compression
 Game image compression for linux based machines.
 
+chdman is part of `mame-tools`  
+dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin)  
+gcit.exe can be found [here](https://wiibackupmanager.co.uk/index.php?file=gcit_Win32_Build7)
+
 ### PSX bin/cue compression for emulator use
 ```
 for i in *.cue; do chdman createcd -i "$i" -o "${i%.*}.chd"; done
