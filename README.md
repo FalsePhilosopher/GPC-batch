@@ -15,7 +15,7 @@ for i in *.iso; do chdman createdvd -i "$i" -o "${i%.*}.chd"; done
 ```
 ### GameCube conversion for use with dolphin
 ```
-for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "${i%.*}.rsv"; done
+for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "${i%.*}.rvz"; done
 ```
 ### GameCube conversion for use with dolphin with progress
 Drop the [GC-Convert.sh](https://github.com/FalsePhilosopher/GPC-batch/raw/main/GC-Convert.sh) into the dir and run it.
