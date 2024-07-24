@@ -1,3 +1,4 @@
+Rem Written by FalsePhilosopher
 Echo off
  
 set isodir=.\%PWD%

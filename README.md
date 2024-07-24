@@ -17,12 +17,15 @@ for i in *.iso; do chdman createdvd -i "$i" -o "${i%.*}.chd"; done
 ```
 for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "${i%.*}.rsv"; done
 ```
+### GameCube conversion for use with dolphin with progress
+Drop the [GC-Convert.sh](https://github.com/FalsePhilosopher/GPC-batch/raw/main/GC-Convert.sh) into the dir and run it.
+```
+wget https://github.com/FalsePhilosopher/GPC-batch/raw/main/GC-Convert.sh && chmod +x GC-Convert.sh && ./GC-Convert
+```
 ### GameCube iso trimming for use with nintendont  
-Add `trim.bat` to the folder, using wine gcit.exe can't rm the .tmp files. So the hacky workaround is included in the one liner. This is very storage intensive as there is two copies untill the .tmp files are removed.
+Add [trim.bat](https://github.com/FalsePhilosopher/GPC-batch/raw/main/trim.bat) to the dir, using wine gcit.exe can't rm the .tmp files. So the hacky workaround is included in the one liner. This is very storage intensive as there is two copies until the .tmp files are removed.
 
 ```
-mkdir converted && wine trim.bat && cd converted && rm *.tmp
+mkdir converted && wget https://github.com/FalsePhilosopher/GPC-batch/raw/main/trim.bat && wine trim.bat && cd converted && rm *.tmp
 ```
----
 
-Info from https://retropie.org.uk/forum/topic/25770/linux-script-to-batch-convert-psx-bin-cue-to-chd
