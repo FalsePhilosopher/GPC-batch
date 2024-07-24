@@ -16,6 +16,6 @@ $PCT
 Converting File $f
 XXX
 EOF
-dolphin-tool convert -i "$f" -f rvz -b 131072 -c zstd -l 5 -o "${f%.*}.rsv"
+dolphin-tool convert -i "$f" -f rvz -b 131072 -c zstd -l 5 -o "$PWD/RVZ/${i%.*}.rvz"
 done
 )

@@ -7,15 +7,15 @@ gcit.exe original location can be found [here](https://wiibackupmanager.co.uk/in
 
 ### PSX bin/cue compression for emulator use
 ```
-for i in *.cue; do chdman createcd -i "$i" -o "${i%.*}.chd"; done
+for i in *.cue; do chdman createcd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 ### PSP/PS2 iso compression for emulator use
 ```
-for i in *.iso; do chdman createdvd -i "$i" -o "${i%.*}.chd"; done
+for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 ### GameCube conversion for use with dolphin
 ```
-for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "${i%.*}.rvz"; done
+for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "$PWD/RVZ/${i%.*}.rvz"; done
 ```
 ### GameCube conversion for use with dolphin with progress
 Drop the [GC-Convert.sh](https://github.com/FalsePhilosopher/GPC-batch/raw/main/GC-Convert.sh) into the dir and run it.
