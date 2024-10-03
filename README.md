@@ -1,7 +1,14 @@
 # Game Preservation Compression
 Game image compression for linux based machines.
 
-chdman is part of `mame-tools`  
+chdman is part of `mame-tools`
+```
+git clone https://github.com/mamedev/mame
+cd mame
+make TOOLS=1 -j5
+```
+Check your package manager for `mame-tools`  
+
 dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin)  
 gcit.exe original location can be found [here](https://wiibackupmanager.co.uk/index.php?file=gcit_Win32_Build7)
 
