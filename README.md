@@ -5,17 +5,17 @@ chdman is part of `mame-tools`
 dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin)  
 gcit.exe original location can be found [here](https://wiibackupmanager.co.uk/index.php?file=gcit_Win32_Build7)
 
-### PSX bin/cue compression for emulator use
+### PSX/SG bin/cue compression for emulator use
 ```
-for i in *.cue; do chdman createcd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
+mkdir CHD && for i in *.cue; do chdman createcd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 ### PSP/PS2 iso compression for emulator use
 ```
-for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
+mkdir CHD && for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 ### GameCube conversion for use with dolphin
 ```
-for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "$PWD/RVZ/${i%.*}.rvz"; done
+mkdir RVZ && for i in *.iso; do echo "converting '$i'"; dolphin-tool convert -i "$i" -f rvz -b 131072 -c zstd -l 5 -o "$PWD/RVZ/${i%.*}.rvz"; done
 ```
 ### GameCube conversion for use with dolphin with progress
 Drop the [GC-Convert.sh](https://github.com/FalsePhilosopher/GPC-batch/raw/main/GC-Convert.sh) into the dir and run it.
