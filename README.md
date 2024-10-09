@@ -5,7 +5,8 @@ chdman is part of `mame-tools`
 ```
 git clone https://github.com/mamedev/mame
 cd mame
-make TOOLS=1 -j5
+make TOOLS=1 -j3 #-j5 if you got a beefy system
+sudo cp chdman /bin
 ```
 Check your package manager for `mame-tools`  
 
