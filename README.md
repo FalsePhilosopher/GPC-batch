@@ -1,16 +1,16 @@
 # Game Preservation Compression
 Game image compression for linux based machines.
 
-chdman is part of `mame-tools`
+chdman is part of [mame-tools](https://github.com/mamedev/mame), Compilation [instructions](https://docs.mamedev.org/initialsetup/compilingmame.html)
 ```
 git clone https://github.com/mamedev/mame
 cd mame
-make TOOLS=1 EMULATOR=0 -j3 #-j5 if you got a beefy system
+make TOOLS=1 EMULATOR=0 -j3 #-j5-8 if you got a beefy system
 sudo cp chdman /bin
 ```
-Check your package manager for `mame-tools`  
 
-dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin)  
+dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin), Compilation [instructions](https://github.com/dolphin-emu/dolphin/wiki/Building-for-Linux)
+
 gcit.exe original location can be found [here](https://wiibackupmanager.co.uk/index.php?file=gcit_Win32_Build7)
 
 ### PSX/SG bin/cue compression for emulator use
