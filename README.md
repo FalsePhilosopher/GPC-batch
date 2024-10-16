@@ -22,6 +22,10 @@ For Zstd compression
 ```
 mkdir CHD && for i in *.cue; do chdman createcd -c "zstd,cdzs,cdflac" -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
+For extraction
+```
+mkdir CHD && for i in *.chd; do chdman extractcd -sb -i "$i" -o "$PWD/CHD/${i%.*}.cue"; done
+```
 ### PSP/PS2 iso compression for emulator use
 ```
 mkdir CHD && for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
