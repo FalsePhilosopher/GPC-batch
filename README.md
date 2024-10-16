@@ -13,22 +13,30 @@ dolphin-tool is part of [dolphin](https://github.com/dolphin-emu/dolphin), Compi
 
 gcit.exe original location can be found [here](https://wiibackupmanager.co.uk/index.php?file=gcit_Win32_Build7)
 
-### PSX/SG bin/cue compression for emulator use
+### PSX/Sega CD bin/cue compression for emulator use
 For standard options cdlz (CD LZMA), cdzl (CD Deflate), cdfl (CD FLAC)
 ```
 mkdir CHD && for i in *.cue; do chdman createcd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 For Zstd compression  
 ```
-mkdir CHD && for i in *.cue; do chdman createcd -c "zstd,cdzs,cdflac" -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
+mkdir CHD && for i in *.cue; do chdman createcd -c "zstd,cdzs,flac" -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
 ```
 For extraction
 ```
-mkdir CHD && for i in *.chd; do chdman extractcd -sb -i "$i" -o "$PWD/CHD/${i%.*}.cue"; done
+mkdir CUE && for i in *.chd; do chdman extractcd -sb -i "$i" -o "$PWD/CUE/${i%.*}.cue"; done
 ```
 ### PSP/PS2 iso compression for emulator use
 ```
 mkdir CHD && for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
+```
+For Zstd compression
+```
+mkdir CHD && for i in *.iso; do chdman createdvd -c "zstd" -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
+```
+For extraction
+```
+mkdir ISO && for i in *.chd; do chdman extractdvd -i "$i" -o "$PWD/ISO/${i%.*}.iso"; done
 ```
 ### GameCube conversion for use with dolphin
 ```
