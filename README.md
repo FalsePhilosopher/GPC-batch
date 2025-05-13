@@ -26,6 +26,10 @@ For extraction
 ```
 mkdir CUE && for i in *.chd; do chdman extractcd -sb -i "$i" -o "$PWD/CUE/${i%.*}.cue"; done
 ```
+For playback on PS3 you can concatenate the .bin files in the order they appear in the .cue.
+```
+cat track1.bin track2.bin track3.bin > merged.bin
+```
 ### PSP/PS2 iso compression for emulator use
 ```
 mkdir CHD && for i in *.iso; do chdman createdvd -i "$i" -o "$PWD/CHD/${i%.*}.chd"; done
