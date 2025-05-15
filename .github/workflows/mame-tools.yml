@@ -5,7 +5,7 @@ on:
 
 jobs:
   Build-AMD64:
-    name: Build mame-tools
+    name: Build mame-tools AMD64
     runs-on: ubuntu-latest
     steps:
       - name: Get tag
