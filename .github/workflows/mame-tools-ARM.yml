@@ -1,0 +1,46 @@
+name: Build ARM64 mame-tools
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build mame-tools
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - name: Get tag
+        run: |
+          latest_tag=$(curl -s "https://api.github.com/repos/mamedev/mame/releases/latest" | jq -r '.tag_name')
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+    
+      - name: Enable source repositories
+        run: |
+          source /etc/os-release
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://security.ubuntu.com/ubuntu $VERSION_CODENAME-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          sudo apt update
+          
+      - name: Install dependencies
+        run: |
+            sudo apt build-dep mame-tools -y
+            sudo apt install wget
+
+      - name: wget latest mame repo release
+        run: |
+          wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
+          unzip ${{ env.LATEST_TAG }}.zip
+          rm ${{ env.LATEST_TAG }}.zip
+          mv mame-* mame
+
+      - name: Build mame-tools
+        run: |
+          cd mame
+          make TOOLS=1 EMULATOR=0 -j4
+          cp chdman ../
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: chdman-ARM64
+          path: chdman
