@@ -30,6 +30,7 @@ jobs:
         run: |
           wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
           unzip ${{ env.LATEST_TAG }}.zip
+          rm ${{ env.LATEST_TAG }}.zip
           mv mame-* mame
           cd mame
           make TOOLS=1 EMULATOR=0 -j4
