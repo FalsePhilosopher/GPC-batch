@@ -30,8 +30,8 @@ jobs:
         run: |
           wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
           unzip ${{ env.LATEST_TAG }}.zip
-          ls
-          cd ${{ env.LATEST_TAG }}
+          mv mame-* mame
+          cd mame
           make TOOLS=1 EMULATOR=0 -j4
           cp chdman ../
 
