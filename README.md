@@ -1,7 +1,7 @@
 # Game Preservation Compression
 Game image compression for linux based machines.
 
-chdman and dolphin-tools can be download from the release section or the automated monthly build artifact.
+chdman and dolphin-tools can be download from the [releases](https://github.com/FalsePhilosopher/GPC-batch/releases) or the automated monthly build artifact.
 
 chdman is part of [mame-tools](https://github.com/mamedev/mame), Compilation [instructions](https://docs.mamedev.org/initialsetup/compilingmame.html)
 ```
