@@ -46,7 +46,7 @@ jobs:
           path: chdman
 
   MAME-ARM64:
-      name: Build mame-tools ARM
+      name: Build mame-tools ARM64
       runs-on: ubuntu-24.04-arm
       steps:
       - name: Get tag
