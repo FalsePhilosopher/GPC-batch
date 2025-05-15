@@ -86,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: chdman-ARM64-${{ env.LATEST_TAG }}
-          path: chdman
+          path: chdman-ARM64
 
   DTools-AMD64:
       name: Build dolphin-tools AMD64
