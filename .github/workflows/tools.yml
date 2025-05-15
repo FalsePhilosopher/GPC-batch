@@ -99,7 +99,7 @@ jobs:
       - name: Install dependencies
         run: |
             sudo apt build-dep dolphin -y
-            sudo apt install wget libxrandr-dev libxi-dev ffmpeg libudev-dev
+            sudo apt install wget libxrandr-dev libxi-dev ffmpeg libudev-dev build-essential git cmake ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libevdev-dev libusb-1.0-0-dev libxrandr-dev libxi-dev libpangocairo-1.0-0 qt6-base-private-dev libqt6svg6-dev libbluetooth-dev libasound2-dev libpulse-dev libgl1-mesa-dev libcurl4-openssl-dev
             
       - name: clone dolphin repo
         run: |
@@ -135,7 +135,7 @@ jobs:
       - name: Install dependencies
         run: |
             sudo apt build-dep dolphin -y
-            sudo apt install wget libxrandr-dev libxi-dev ffmpeg libudev-dev
+            sudo apt install wget libxrandr-dev libxi-dev ffmpeg libudev-dev build-essential git cmake ffmpeg libavcodec-dev libavformat-dev libavutil-dev libswscale-dev libevdev-dev libusb-1.0-0-dev libxrandr-dev libxi-dev libpangocairo-1.0-0 qt6-base-private-dev libqt6svg6-dev libbluetooth-dev libasound2-dev libpulse-dev libgl1-mesa-dev libcurl4-openssl-dev
             
       - name: clone dolphin repo
         run: |
