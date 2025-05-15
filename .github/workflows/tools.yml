@@ -99,7 +99,7 @@ jobs:
       - name: Install dependencies
         run: |
             sudo apt build-dep dolphin -y
-            sudo apt install wget
+            sudo apt install wget libxrandr-dev libxi-dev
             
       - name: clone dolphin repo
         run: |
