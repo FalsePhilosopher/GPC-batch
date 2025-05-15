@@ -8,6 +8,11 @@ jobs:
     name: Build mame-tools
     runs-on: ubuntu-latest
     steps:
+      - name: Get tag
+        run: |
+          latestst_tag=$(curl -s "https://api.github.com/repos/mamedev/mame/releases/latest" | jq -r '.tag_name')
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+    
       - name: Enable source repositories
         run: |
           source /etc/os-release
@@ -21,11 +26,8 @@ jobs:
             sudo apt build-dep mame-tools -y
             sudo apt install wget
 
-      # Step 3: Clone and build mame-tools
       - name: Build mame-tools
         run: |
-          latestst_tag=$(curl -s "https://api.github.com/repos/mamedev/mame/releases/latest" | jq -r '.tag_name')
-          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
           wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
           unzip ${{ env.LATEST_TAG }}.zip
           ls
@@ -33,7 +35,6 @@ jobs:
           make TOOLS=1 EMULATOR=0 -j4
           cp chdman ../
 
-      # Step 4: Upload the chdman artifact
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
