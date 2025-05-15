@@ -26,12 +26,15 @@ jobs:
             sudo apt build-dep mame-tools -y
             sudo apt install wget
 
-      - name: Build mame-tools
+      - name: wget mame-tools
         run: |
           wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
           unzip ${{ env.LATEST_TAG }}.zip
           rm ${{ env.LATEST_TAG }}.zip
           mv mame-* mame
+
+      - name: Build mame-tools
+        run: |
           cd mame
           make TOOLS=1 EMULATOR=0 -j4
           cp chdman ../
