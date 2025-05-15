@@ -39,13 +39,13 @@ jobs:
         run: |
           cd mame
           make TOOLS=1 EMULATOR=0 -j4
-          cp chdman ../
+          mv chdman ../chdman-AMD64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: chdman-AMD64-${{ env.LATEST_TAG }}
-          path: chdman
+          path: chdman-AMD64
 
   MAME-ARM64:
       name: Build mame-tools ARM64
@@ -75,11 +75,13 @@ jobs:
           unzip ${{ env.LATEST_TAG }}.zip
           rm ${{ env.LATEST_TAG }}.zip
           mv mame-* mame
+          
       - name: Build mame-tools
         run: |
           cd mame
           make TOOLS=1 EMULATOR=0 -j4
-          cp chdman ../
+          mv chdman ../chdman-ARM64
+          
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -115,16 +117,16 @@ jobs:
           cmake ..
           make -j$(nproc)
           cd Binaries
-          cp dolphin-tool $GITHUB_WORKSPACE
+          mv dolphin-tool $GITHUB_WORKSPACE/dolphin-tool-AMD64
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dolphin-tool-AMD64
-          path: dolphin-tool
+          path: dolphin-tool-AMD64
 
   DTools-ARM64:
-      name: Build dolphin-tools ARM64
+      name: Build dolphin-tools ARM64          mv chdman-AMD64 ../chdman-AMD64
       runs-on: ubuntu-24.04-arm
       steps:
       - name: Enable source repositories
@@ -152,13 +154,13 @@ jobs:
           cmake ..
           make -j$(nproc)
           cd Binaries
-          cp dolphin-tool $GITHUB_WORKSPACE
+          mv dolphin-tool $GITHUB_WORKSPACE/dolphin-tool-ARM64
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: dolphin-tool-ARM64
-          path: dolphin-tool
+          path: dolphin-tool-ARM64
 
   release:
     needs: [MAME-AMD64, MAME-ARM64, DTools-AMD64, DTools-ARM64]
