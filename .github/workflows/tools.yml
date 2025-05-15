@@ -112,7 +112,8 @@ jobs:
           cd build
           cmake ..
           make -j$(nproc)
-          cp dolphin-tool ../../
+          cd Binaries
+          cp dolphin-tool $GITHUB_WORKSPACE
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -148,7 +149,8 @@ jobs:
           cd build
           cmake ..
           make -j$(nproc)
-          cp dolphin-tool ../../
+          cd Binaries
+          cp dolphin-tool $GITHUB_WORKSPACE
           
       - name: Upload artifact
         uses: actions/upload-artifact@v4
