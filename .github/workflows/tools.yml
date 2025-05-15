@@ -1,10 +1,10 @@
-name: Build mame-tools and Upload chdman
+name: Build/upload tools
 
 on:
   workflow_dispatch:
 
 jobs:
-  Build-AMD64:
+  MAME-AMD64:
     name: Build mame-tools AMD64
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +45,7 @@ jobs:
           name: chdman-AMD64-${{ env.LATEST_TAG }}
           path: chdman
 
-  Build-ARM64:
+  MAME-ARM64:
       name: Build mame-tools ARM
       runs-on: ubuntu-24.04-arm
       steps:
@@ -66,6 +66,7 @@ jobs:
         run: |
             sudo apt build-dep mame-tools -y
             sudo apt install wget
+            
       - name: wget latest mame repo release
         run: |
           wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
@@ -83,10 +84,87 @@ jobs:
           name: chdman-ARM64-${{ env.LATEST_TAG }}
           path: chdman
 
+  DTools-AMD64:
+      name: Build dolphin-tools AMD64
+      runs-on: ubuntu-latest
+      steps:
+      - name: Enable source repositories
+        run: |
+          source /etc/os-release
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://security.ubuntu.com/ubuntu $VERSION_CODENAME-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          sudo apt update
+          
+      - name: Install dependencies
+        run: |
+            sudo apt build-dep dolphin -y
+            sudo apt install wget
+            
+      - name: clone dolphin repo
+        run: |
+          git clone --recursive https://github.com/dolphin-emu/dolphin
+          
+      - name: Build dolphin-tools
+        run: |
+          cd dolphin
+          mkdir build
+          cd build
+          cmake ..
+          make -j$(nproc)
+          cp dolphin-tool ../../
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dolphin-tool-AMD64
+          path: dolphin-tool
+
+  DTools-ARM64:
+      name: Build dolphin-tools ARM64
+      runs-on: ubuntu-24.04-arm
+      steps:
+      - name: Enable source repositories
+        run: |
+          source /etc/os-release
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://security.ubuntu.com/ubuntu $VERSION_CODENAME-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          sudo apt update
+          
+      - name: Install dependencies
+        run: |
+            sudo apt build-dep dolphin -y
+            sudo apt install wget
+            
+      - name: clone dolphin repo
+        run: |
+          git clone --recursive https://github.com/dolphin-emu/dolphin
+          
+      - name: Build dolphin-tools
+        run: |
+          cd dolphin
+          mkdir build
+          cd build
+          cmake ..
+          make -j$(nproc)
+          cp dolphin-tool ../../
+          
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dolphin-tool-ARM64
+          path: dolphin-tool
+
   release:
-    needs: [Build-AMD64, Build-ARM64]
+    needs: [MAME-AMD64, MAME-ARM64, DTools-AMD64, DTools-ARM64]
     runs-on: ubuntu-latest
     steps:
+      - name: Get tag
+        run: |
+          latest_tag=$(curl -s "https://api.github.com/repos/mamedev/mame/releases/latest" | jq -r '.tag_name')
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+          
       - name: Download Artifact One
         uses: actions/download-artifact@v4
         with:
@@ -97,6 +175,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: chdman-ARM64-${{ env.LATEST_TAG }}
+          path: artifacts
+
+      - name: Download Artifact Three
+        uses: actions/download-artifact@v4
+        with:
+          name: dolphin-tool-AMD64
+          path: artifacts
+
+      - name: Download Artifact Four
+        uses: actions/download-artifact@v4
+        with:
+          name: dolphin-tool-ARM64
           path: artifacts
 
       - name: Create GitHub Release
