@@ -1,0 +1,41 @@
+name: Build mame-tools and Upload chdman
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build mame-tools
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable source repositories
+        run: |
+          source /etc/os-release
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://azure.archive.ubuntu.com/ubuntu $VERSION_CODENAME-updates main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          echo "deb-src http://security.ubuntu.com/ubuntu $VERSION_CODENAME-security main restricted universe multiverse" | sudo tee -a /etc/apt/sources.list
+          sudo apt update
+          
+      - name: Install dependencies
+        run: |
+            sudo apt build-dep mame-tools -y
+            sudo apt install wget
+
+      # Step 3: Clone and build mame-tools
+      - name: Build mame-tools
+        run: |
+          latestst_tag=$(curl -s "https://api.github.com/repos/mamedev/mame/releases/latest" | jq -r '.tag_name')
+          echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+          wget https://github.com/mamedev/mame/archive/refs/tags/${{ env.LATEST_TAG }}.zip
+          unzip ${{ env.LATEST_TAG }}.zip
+          ls
+          cd ${{ env.LATEST_TAG }}
+          make TOOLS=1 EMULATOR=0 -j4
+          cp chdman ../
+
+      # Step 4: Upload the chdman artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: chdman
+          path: chdman
